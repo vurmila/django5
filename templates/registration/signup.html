@@ -1,0 +1,31 @@
+{% extends 'master.html' %}
+{% block body %}
+<section id="form" style="margin-left:30%;">
+    <div class="container">
+        <div class="col-sm-4 col-sm-offset-1">
+            <div class="signup-form">
+                <h2>New User Signup</h2>
+                <form method="post" action="{% url 'signup' %}">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+                    {% for field in form %}
+                    <div class="form-group{% if field.errors %} has-error{% endif %}">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% for error in field.errors %}
+                        <span class="help-block">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <button class="btn btn-default" type="submit">Signup</button><br>
+                    <span style="margin-left:80px;">Already have an account</span>&nbsp;<a href="{% url 'login' %}">Log In</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
